@@ -1,5 +1,5 @@
 #ifndef MYMALLOC_H_
-#define MYMALLOC_H_)
+#define MYMALLOC_H_
 #include <stdio.h>
 #include <stdlib.h>
 #define malloc(s) mymalloc(s, __FILE__, __LINE__);
