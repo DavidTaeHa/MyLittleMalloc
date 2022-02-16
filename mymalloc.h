@@ -8,9 +8,12 @@
 typedef struct{
   unsigned int BlockSz;
   unsigned int preBlockSz;
+  int free;
   node *next;
   node *prev;
 } node;
+
+//For free, 1 is true, 0 is false
 
 node *prevPtr(node *);
 node *nextPtr(node *);
