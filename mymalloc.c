@@ -25,7 +25,9 @@ node *nextPtr(node *curr)
 
 void *mymalloc(size_t size, char *file, int line)
 {
-  //Checks if the heap attributes were not initialized
+  void* start_address = NULL;
+
+  //Creates the inital area of memory if not already initialized
   if(initialized == 0){
     head->BlockSz = memSize - sizeof(node);
     head->free = 1;
@@ -54,9 +56,36 @@ void *mymalloc(size_t size, char *file, int line)
 
   node *curr = head;
   
+  //Looks for first empty chunk that fits both metadata and allocated data
+  while(curr->next != NULL){
+    
+    //Condition checks if given chunk has sufficient size and is free
+    if((curr->free == 1) && (curr->BlockSz < size)){
+
+      //The current memory chunk is equal to the necessary size
+      if(size == curr->BlockSz){
+
+      }
+
+      //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
+      else if((size + sizeof(node)) < curr->BlockSz){
+        //Divide the current chunk into two parts for memory allocation
+
+      }
+
+    }
+
+    curr = curr->next;
+  }
+
+  //Error for not enough memory in the virtual heap
+  fprintf(stderr, "%s: line: %d: error: not enough memory in the heap.\n", file, line);
+  EXIT_FAILURE;
+
   while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
     
   }
+
 }
 
 void myfree(void *ptr, char *file, int line)
