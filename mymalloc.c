@@ -60,7 +60,7 @@ void *mymalloc(size_t size, char *file, int line)
   while(curr->next != NULL){
     
     //Condition checks if given chunk has sufficient size and is free
-    if((curr->free == 1) && (curr->BlockSz < size)){
+    if((curr->free == 1) && (size <= curr->BlockSz)){
 
       //The current memory chunk is equal to the necessary size
       if(size == curr->BlockSz){
@@ -80,7 +80,7 @@ void *mymalloc(size_t size, char *file, int line)
 
   //Error for not enough memory in the virtual heap
   fprintf(stderr, "%s: line: %d: error: not enough memory in the heap.\n", file, line);
-  EXIT_FAILURE;
+  return start_address;
 
   while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
     
