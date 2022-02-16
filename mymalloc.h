@@ -8,6 +8,8 @@
 typedef struct{
   unsigned int BlockSz;
   unsigned int preBlockSz;
+  node *next;
+  node *prev;
 } node;
 
 node *prevPtr(node *);
