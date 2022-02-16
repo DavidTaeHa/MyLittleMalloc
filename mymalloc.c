@@ -24,6 +24,7 @@ node *nextPtr(node *curr)
 void *mymalloc(size_t size, char *file, int line)
 {
   if(size == 0){
+    fprintf(stderr, "%s: line: %d: error: No memory was allocated.\n", file, line);
     return NULL;
   }
 
