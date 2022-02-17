@@ -4,7 +4,6 @@
 
 #define memSize 4096
 static char memBlock[memSize];
-static int initialized = 0;
 
 //Main area of memory started out as one whole block
 node *head = (node *) memBlock;
@@ -28,12 +27,11 @@ void *mymalloc(size_t size, char *file, int line)
   void* start_address = NULL;
 
   //Creates the inital area of memory if not already initialized
-  if(initialized == 0){
+  if(head->BlockSz == NULL){
     head->BlockSz = memSize - sizeof(node);
     head->free = 1;
     head->next = NULL;
     head->prev = NULL;
-    initialized = 1;
   }
 
   //Given size is equal to zero
