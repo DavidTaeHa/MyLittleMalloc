@@ -89,7 +89,7 @@ void *mymalloc(size_t size, char *file, int line)
 void myfree(void *ptr, char *file, int line)
 {
   //Checks if the heap was not initialized
-  if(initialized == 0){
+  if(head->BlockSz == 0){
     head->BlockSz = memSize - sizeof(node);
     head->free = 1;
     head->next = NULL;
