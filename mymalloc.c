@@ -27,7 +27,7 @@ void *mymalloc(size_t size, char *file, int line)
   void* start_address = NULL;
 
   //Creates the inital area of memory if not already initialized
-  if(head->BlockSz == NULL){
+  if(head->BlockSz == 0){
     head->BlockSz = memSize - sizeof(node);
     head->free = 1;
     head->next = NULL;
