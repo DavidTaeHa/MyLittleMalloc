@@ -149,11 +149,16 @@ void myfree(void *ptr, char *file, int line)
         curr->prev->BlockSz = curr->prev->BlockSz + curr->BlockSz;
         curr = curr->prev;
       }
+      //FIXME: need to fix this part
       if(curr->next != NULL && curr->next->free == 1){
+        printf("asdf\n");
+        if(curr->next->next != NULL){
+          printf("asdf2\n");
+          curr->next->next->prev = curr;
+        }
         curr->next = curr->next->next;
         curr->BlockSz = curr->BlockSz + curr->next->BlockSz; 
       }
-
       return;
     }
 
@@ -181,11 +186,14 @@ int main(int argc, char* argv[]){
     void *test = malloc(100);
     void *test2 = malloc(200);
     void *test3 = malloc(300);
-    void *test4 = malloc(400);
+    //void *test4 = malloc(400);
     printf("Address: %p\n", test);
     printf("Address: %p\n", test2);
-    printf("Address: %p\n", test3);
-    printf("Address: %p\n", test4);
+    //printf("Address: %p\n", test3);
+    //printf("Address: %p\n", test4);
+    printList();
+    free(test);
+    free(test2);
     printf("--------------------\n");
     printList();
     return 0;
