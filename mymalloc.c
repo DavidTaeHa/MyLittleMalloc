@@ -144,7 +144,7 @@ void myfree(void *ptr, char *file, int line)
 
       //Handle coalescence of adjacent free blocks, check both left and right block
       if(curr->prev != NULL && curr->prev->free == 1){
-        
+
       }
       if(curr->next != NULL && curr->next->free == 1){
 
@@ -156,8 +156,10 @@ void myfree(void *ptr, char *file, int line)
 
   }
 
+  //Never found the address of given pointer, the allocated memory does not exist
   fprintf(stderr, "%s: line: %d: error: attempting to free allocated memory that does not exist.\n", file, line);
   return 0;
+  
 }
 
 void printList(){
