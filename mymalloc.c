@@ -24,7 +24,7 @@ struct node *nextPtr(struct node *curr)
 
 void *mymalloc(size_t size, char *file, int line)
 {
-  printf("testing");
+
   //Creates the inital area of memory if not already initialized
   if(head->BlockSz == 0){
     head->start_address = (void *) head + sizeof(struct node);
@@ -43,19 +43,19 @@ void *mymalloc(size_t size, char *file, int line)
   //Given size was less than 0
   if(size < 0){
    fprintf(stderr, "%s: line: %d: error: cannot allocate negative memory.\n", file, line);
-   EXIT_FAILURE;
+   return NULL;
   }
 
   //Given size exceeds the memory limit
-  if((size + sizeof(struct node)) >= memSize){
+  if((size + sizeof(struct node)) > memSize){
    fprintf(stderr, "%s: line: %d: error: allocation size exceeds memory limit.\n", file, line);
-   EXIT_FAILURE;
+   return NULL;
   }
 
   struct node *curr = head;
-  
+
   //Looks for first empty chunk that fits both metadata and allocated data
-  while(curr->next != NULL){
+  while(curr != NULL){
     
     //Condition checks if given chunk has sufficient size and is free
     if((curr->free == 1) && (size <= curr->BlockSz)){
@@ -112,8 +112,11 @@ void myfree(void *ptr, char *file, int line)
 }
 
 //For Testing purposes
+//max 4056
 int main(int argc, char* argv[]){
-    void *test = malloc(5000);
+    void *test = malloc(4000);
+    void *test2 = malloc(16);
     printf("Address: %p\n", test);
+    printf("Address: %p\n", test2);
     return 0;
 }

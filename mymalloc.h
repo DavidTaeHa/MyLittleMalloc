@@ -5,6 +5,7 @@
 #define malloc(s) mymalloc(s, __FILE__, __LINE__);
 #define free(p) myfree(p, __FILE__, __LINE__);
 
+//Size of node is 40 bytes
 struct node{
   void *start_address;
   unsigned int BlockSz;
