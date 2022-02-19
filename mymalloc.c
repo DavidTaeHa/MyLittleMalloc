@@ -150,7 +150,8 @@ void myfree(void *ptr, char *file, int line)
         curr = curr->prev;
       }
       if(curr->next != NULL && curr->next->free == 1){
-        
+        curr->next = curr->next->next;
+        curr->BlockSz = curr->BlockSz + curr->next->BlockSz; 
       }
 
       return;
