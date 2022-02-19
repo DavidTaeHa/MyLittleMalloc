@@ -142,12 +142,13 @@ void myfree(void *ptr, char *file, int line)
 
       //Handle coalescence of adjacent free blocks, check both left and right block
       if(curr->prev != NULL && curr->prev->free == 1){
-
+        
       }
       if(curr->next != NULL && curr->next->free == 1){
 
       }
 
+      return;
     }
 
     curr = curr->next;
