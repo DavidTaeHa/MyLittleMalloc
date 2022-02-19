@@ -24,7 +24,7 @@ struct node *nextPtr(struct node *curr)
 
 void *mymalloc(size_t size, char *file, int line)
 {
-
+  printf("testing");
   //Creates the inital area of memory if not already initialized
   if(head->BlockSz == 0){
     head->start_address = (void *) head + sizeof(struct node);
