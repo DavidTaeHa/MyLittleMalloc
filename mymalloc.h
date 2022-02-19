@@ -13,7 +13,6 @@ struct node{
   struct node *next;
   struct node *prev;
 };
-
 //For free, 1 is true, 0 is false
 
 struct node *prevPtr(struct node *);

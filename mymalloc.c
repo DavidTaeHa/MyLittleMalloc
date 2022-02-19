@@ -94,9 +94,9 @@ void *mymalloc(size_t size, char *file, int line)
   fprintf(stderr, "%s: line: %d: error: not enough memory in the heap.\n", file, line);
   return NULL;
 
-  while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
+  //while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
     
-  }
+  //}
 
 }
 
