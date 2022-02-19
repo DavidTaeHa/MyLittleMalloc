@@ -5,18 +5,18 @@
 #define malloc(s) mymalloc(s, __FILE__, __LINE__);
 #define free(p) myfree(p, __FILE__, __LINE__);
 
-typedef struct{
+struct node{
   unsigned int BlockSz;
   unsigned int preBlockSz;
   int free;
   struct node *next;
   struct node *prev;
-} node;
+};
 
 //For free, 1 is true, 0 is false
 
-node *prevPtr(node *);
-node *nextPtr(node *);
+struct node *prevPtr(node *);
+struct node *nextPtr(node *);
 void *mymalloc(size_t size, char *file, int line);
 void myfree(void *ptr, char *file, int line);
 

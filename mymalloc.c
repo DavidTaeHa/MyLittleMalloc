@@ -6,20 +6,20 @@
 static char memBlock[memSize];
 
 //Main area of memory started out as one whole block
-node *head = (node *) memBlock;
+struct node *head = (struct node *) memBlock;
 
-node *prevPtr(node *curr)
+struct node *prevPtr(struct node *curr)
 {
   char *retr = (char *) curr;
-  retr = retr - curr->preBlockSz - sizeof(node);
-  return (node *) retr;
+  retr = retr - curr->preBlockSz - sizeof(struct node);
+  return (struct node *) retr;
 }
 
-node *nextPtr(node *curr)
+struct node *nextPtr(struct node *curr)
 {
   char *retr = (char *) curr;
-  retr = retr + sizeof(node) + curr->BlockSz;
-  return (node *) retr;
+  retr = retr + sizeof(struct node) + curr->BlockSz;
+  return (struct node *) retr;
 }
 
 void *mymalloc(size_t size, char *file, int line)
@@ -28,7 +28,7 @@ void *mymalloc(size_t size, char *file, int line)
 
   //Creates the inital area of memory if not already initialized
   if(head->BlockSz == 0){
-    head->BlockSz = memSize - sizeof(node);
+    head->BlockSz = memSize - sizeof(struct node);
     head->free = 1;
     head->next = NULL;
     head->prev = NULL;
@@ -47,12 +47,12 @@ void *mymalloc(size_t size, char *file, int line)
   }
 
   //Given size exceeds the memory limit
-  if((size + sizeof(node)) >= memSize){
+  if((size + sizeof(struct node)) >= memSize){
    fprintf(stderr, "%s: line: %d: error: allocation size exceeds memory limit.\n", file, line);
    EXIT_FAILURE;
   }
 
-  node *curr = head;
+  struct node *curr = head;
   
   //Looks for first empty chunk that fits both metadata and allocated data
   while(curr->next != NULL){
@@ -66,7 +66,7 @@ void *mymalloc(size_t size, char *file, int line)
       }
 
       //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
-      else if((size + sizeof(node)) < curr->BlockSz){
+      else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
 
       }
@@ -90,7 +90,7 @@ void myfree(void *ptr, char *file, int line)
 {
   //Checks if the heap was not initialized
   if(head->BlockSz == 0){
-    head->BlockSz = memSize - sizeof(node);
+    head->BlockSz = memSize - sizeof(struct node);
     head->free = 1;
     head->next = NULL;
     head->prev = NULL;
