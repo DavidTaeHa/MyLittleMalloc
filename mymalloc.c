@@ -149,7 +149,7 @@ void myfree(void *ptr, char *file, int line)
         curr->prev->next = curr->next;
         curr = curr->prev;
       }
-      //FIXME: may need to fix this part
+      //FIXME: may need to fix this part, further testing required
       if(curr->next != NULL && curr->next->free == 1){
         printf("asdf\n");
         curr->BlockSz = curr->BlockSz + curr->next->BlockSz; 
