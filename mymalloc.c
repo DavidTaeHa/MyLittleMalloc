@@ -24,10 +24,10 @@ struct node *nextPtr(struct node *curr)
 
 void *mymalloc(size_t size, char *file, int line)
 {
-  void* start_address = NULL;
 
   //Creates the inital area of memory if not already initialized
   if(head->BlockSz == 0){
+    head->start_address = (void *) head + sizeof(struct node);
     head->BlockSz = memSize - sizeof(struct node);
     head->free = 1;
     head->next = NULL;
@@ -62,13 +62,27 @@ void *mymalloc(size_t size, char *file, int line)
 
       //The current memory chunk is equal to the necessary size
       if(size == curr->BlockSz){
-
+        curr->free = 0;
+        return curr->start_address;
       }
 
       //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
       else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
 
+        //Creates new node to represent right part of the divided chunk, the free section
+        struct node temp;
+        temp.BlockSz = curr->BlockSz - size - sizeof(struct node);
+        temp.free = 1;
+        temp.start_address = (void *)curr + size + sizeof(struct node);
+        temp.next = curr->next;
+        temp.prev = curr;
+
+        //Changes attributes of current node to represent left part of the divided chunk, the allocated section
+        curr->BlockSz = size;
+        curr->free = 0;
+        curr->next = &temp;
+        return curr->start_address;
       }
 
     }
@@ -78,7 +92,7 @@ void *mymalloc(size_t size, char *file, int line)
 
   //Error for not enough memory in the virtual heap
   fprintf(stderr, "%s: line: %d: error: not enough memory in the heap.\n", file, line);
-  return start_address;
+  return NULL;
 
   while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
     
