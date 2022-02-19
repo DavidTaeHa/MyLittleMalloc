@@ -123,7 +123,7 @@ void myfree(void *ptr, char *file, int line)
   //Checks if the heap was not initialized
   if(head->BlockSz == 0){
     printf("Heap has not been initialized");
-    return 0;
+    return;
   }
 
   struct node *curr = head;
@@ -136,7 +136,7 @@ void myfree(void *ptr, char *file, int line)
       //The target node is already freed
       if(curr->free == 1){
         fprintf(stderr, "%s: line: %d: error: allocated memory is already freed.\n", file, line);
-        return 0;
+        return;
       }
       else if(curr->free == 0){
         curr->free = 1;
@@ -158,15 +158,16 @@ void myfree(void *ptr, char *file, int line)
 
   //Never found the address of given pointer, the allocated memory does not exist
   fprintf(stderr, "%s: line: %d: error: attempting to free allocated memory that does not exist.\n", file, line);
-  return 0;
-  
+
 }
 
 void printList(){
   struct node *curr = head;
+  int count = 1;
   while(curr != NULL){
-    printf("%d\n", curr->BlockSz);
+    printf("Chunk %d: %d\n", count, curr->BlockSz);
     curr = curr->next;
+    count++;
   }
 }
 
