@@ -79,7 +79,8 @@ void *mymalloc(size_t size, char *file, int line)
       else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
         printf("-------------------\n");
-        printf("Whole side: %d\n",curr->BlockSz);
+        printf("Whole Chunk: %d\n",curr->BlockSz);
+
         //Creates new node to represent right part of the divided chunk, the free section
         struct node *temp = (void *)curr + size + sizeof(struct node);
         temp->start_address = (void *)curr + size + sizeof(struct node);
@@ -121,11 +122,42 @@ void myfree(void *ptr, char *file, int line)
 {
   //Checks if the heap was not initialized
   if(head->BlockSz == 0){
-    head->BlockSz = memSize - sizeof(struct node);
-    head->free = 1;
-    head->next = NULL;
-    head->prev = NULL;
+    printf("Heap has not been initialized");
+    return 0;
   }
+
+  struct node *curr = head;
+
+  while(curr != NULL){
+
+    //See if the address of given and current node matches
+    if(ptr == curr->start_address){
+
+      //The target node is already freed
+      if(curr->free == 1){
+        fprintf(stderr, "%s: line: %d: error: allocated memory is already freed.\n", file, line);
+        return 0;
+      }
+      else if(curr->free == 0){
+        curr->free = 1;
+      }
+
+      //Handle coalescence of adjacent free blocks, check both left and right block
+      if(curr->prev != NULL && curr->prev->free == 1){
+        
+      }
+      if(curr->next != NULL && curr->next->free == 1){
+
+      }
+
+    }
+
+    curr = curr->next;
+
+  }
+
+  fprintf(stderr, "%s: line: %d: error: attempting to free allocated memory that does not exist.\n", file, line);
+  return 0;
 }
 
 void printList(){
