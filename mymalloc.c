@@ -110,3 +110,10 @@ void myfree(void *ptr, char *file, int line)
     head->prev = NULL;
   }
 }
+
+//For Testing purposes
+int main(int argc, char* argv[]){
+    void *test = malloc(5000);
+    printf("Address: %p\n", test);
+    return 0;
+}
