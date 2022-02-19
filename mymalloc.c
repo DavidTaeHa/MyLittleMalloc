@@ -53,32 +53,31 @@ void *mymalloc(size_t size, char *file, int line)
   }
 
   struct node *curr = head;
-  printf("Head Begin: %d\n",curr->BlockSz);
   int count = 1;
 
   void *address = NULL;
 
+  printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
   //Looks for first empty chunk that fits both metadata and allocated data
   while(curr != NULL){
     printf("-----------------------------\n");
     printf("Iteration %d:\n", count);
-    printf("Given Size: %d\n",curr->BlockSz);
+    printf("Chunk Size: %d\n",curr->BlockSz);
 
     //Condition checks if given chunk has sufficient size and is free
     if((curr->free == 1) && (size <= curr->BlockSz)){
 
-      //The current memory chunk is equal to the necessary size
+      //The current memory chunk is equal to the necessary size, no need to divide into two parts
       if(size == curr->BlockSz){
         curr->free = 0;
         address = curr->start_address;
-        curr = head;
         return address;
       }
 
       //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
       else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
-        printf("-------------------\n");
+        printf("Diving chunk into two parts:\n");
         printf("Whole Chunk: %d\n",curr->BlockSz);
 
         //Creates new node to represent right part of the divided chunk, the free section
@@ -98,7 +97,6 @@ void *mymalloc(size_t size, char *file, int line)
         printf("Right Side: %d\n",temp->BlockSz);
         printf("Head: %d\n",head->BlockSz);
         address = curr->start_address;
-        curr = head;
         return address;
       }
 
