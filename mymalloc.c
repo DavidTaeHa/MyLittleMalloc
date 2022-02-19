@@ -53,41 +53,58 @@ void *mymalloc(size_t size, char *file, int line)
   }
 
   struct node *curr = head;
+  printf("Head Begin: %d\n",curr->BlockSz);
+  int count = 1;
+
+  void *address = NULL;
 
   //Looks for first empty chunk that fits both metadata and allocated data
   while(curr != NULL){
-    
+    printf("-----------------------------\n");
+    printf("Iteration %d:\n", count);
+    printf("Given Size: %d\n",curr->BlockSz);
+
     //Condition checks if given chunk has sufficient size and is free
     if((curr->free == 1) && (size <= curr->BlockSz)){
 
       //The current memory chunk is equal to the necessary size
       if(size == curr->BlockSz){
         curr->free = 0;
-        return curr->start_address;
+        address = curr->start_address;
+        curr = head;
+        return address;
       }
 
       //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
       else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
-
+        printf("-------------------\n");
+        printf("Whole side: %d\n",curr->BlockSz);
         //Creates new node to represent right part of the divided chunk, the free section
-        struct node temp;
-        temp.BlockSz = curr->BlockSz - size - sizeof(struct node);
-        temp.free = 1;
-        temp.start_address = (void *)curr + size + sizeof(struct node);
-        temp.next = curr->next;
-        temp.prev = curr;
+        struct node *temp = (void *)curr + size + sizeof(struct node);
+        temp->start_address = (void *)curr + size + sizeof(struct node);
+        temp->BlockSz = curr->BlockSz - size - sizeof(struct node);
+        temp->free = 1;
+        temp->next = curr->next;
+        temp->prev = curr;
 
         //Changes attributes of current node to represent left part of the divided chunk, the allocated section
         curr->BlockSz = size;
         curr->free = 0;
-        curr->next = &temp;
-        return curr->start_address;
+        curr->next = temp;
+        
+        printf("Left Side: %d\n",curr->BlockSz);
+        printf("Right Side: %d\n",temp->BlockSz);
+        printf("Head: %d\n",head->BlockSz);
+        address = curr->start_address;
+        curr = head;
+        return address;
       }
 
     }
 
     curr = curr->next;
+    count++;
   }
 
   //Error for not enough memory in the virtual heap
@@ -111,12 +128,25 @@ void myfree(void *ptr, char *file, int line)
   }
 }
 
+void printList(){
+  struct node *curr = head;
+  while(curr != NULL){
+    printf("%d\n", curr->BlockSz);
+    curr = curr->next;
+  }
+}
+
 //For Testing purposes
-//max 4056
 int main(int argc, char* argv[]){
-    void *test = malloc(4000);
-    void *test2 = malloc(16);
+    void *test = malloc(100);
+    void *test2 = malloc(200);
+    void *test3 = malloc(300);
+    void *test4 = malloc(400);
     printf("Address: %p\n", test);
     printf("Address: %p\n", test2);
+    printf("Address: %p\n", test3);
+    printf("Address: %p\n", test4);
+    printf("--------------------\n");
+    printList();
     return 0;
 }
