@@ -32,12 +32,6 @@ void *mymalloc(size_t size, char *file, int line)
    return NULL;
   }
 
-  //Given size exceeds the memory limit
-  if((size + sizeof(struct node)) > memSize){
-   fprintf(stderr, "%s: line: %d: error: allocation size exceeds memory limit.\n", file, line);
-   return NULL;
-  }
-
   struct node *curr = head;
   int count = 1;
 
@@ -69,7 +63,7 @@ void *mymalloc(size_t size, char *file, int line)
         //Creates new node to represent right part of the divided chunk, the free section
         struct node *temp = (void *)curr + size + sizeof(struct node);
         temp->start_address = (void *)curr + size + sizeof(struct node);
-        temp->BlockSz = curr->BlockSz - size - sizeof(struct node);
+        temp->BlockSz = curr->BlockSz - size;
         temp->free = 1;
         temp->next = curr->next;
         temp->prev = curr;
