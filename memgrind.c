@@ -101,8 +101,7 @@ int main(){
     for(i = 0; i < 50; i++){
         //third += grindThree();
     }
-
-    printf("asdf");
+    
     printf("Total of Immediate: %f seconds\n", first);
     printf("Total of Delayed: %f seconds\n", second);
     printf("Total of Random: %f seconds\n", third);

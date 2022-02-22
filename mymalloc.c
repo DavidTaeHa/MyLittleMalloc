@@ -149,7 +149,7 @@ void printList(){
   struct node *curr = head;
   int count = 1;
   while(curr != NULL){
-    printf("Chunk %d: %d\n", count, curr->BlockSz);
+    printf("Chunk %d: %d Free: %d\n", count, curr->BlockSz, curr->free);
     curr = curr->next;
     count++;
   }
