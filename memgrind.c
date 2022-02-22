@@ -150,20 +150,18 @@ int main(){
         //second += grindTwo();
     }
     for(i = 0; i < 50; i++){
-        third += grindThree();
+        //third += grindThree();
     }
     for(i = 0; i < 50; i++){
-        fourth += grindFour();
+        //fourth += grindFour();
     }
     for(i = 0; i < 50; i++){
-        fifth += grindFive();
+        //fifth += grindFive();
     }
-<<<<<<< HEAD
 
     printf("Total of Immediate: %f seconds\n", first);
     printf("Total of Delayed: %f seconds\n", second);
     printf("Total of Random: %f seconds\n", third);
-=======
     printf("Seconds:\n");
     printf("\tTotal of Immediate: %f seconds\n", first);
     printf("\tAverage of Immediate: %f seconds\n", first/50);
@@ -195,7 +193,6 @@ int main(){
     printf("\n");
     printf("\tTotal of Double Array: %f milliseconds\n", fifth*1000000);
     printf("\tAverage of Double Array: %f milliseconds\n", fifth*20000);
->>>>>>> 3c0f2c75f8b640d62f0c8c1295f898344daa1edd
     printf("\n");
     return 0;
 }
