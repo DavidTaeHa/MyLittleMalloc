@@ -57,12 +57,12 @@ void *mymalloc(size_t size, char *file, int line)
 
   void *address = NULL;
 
-  printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+  //printf("!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
   //Looks for first empty chunk that fits both metadata and allocated data
   while(curr != NULL){
-    printf("-----------------------------\n");
-    printf("Iteration %d:\n", count);
-    printf("Chunk Size: %d\n",curr->BlockSz);
+    //printf("-----------------------------\n");
+    //printf("Iteration %d:\n", count);
+    //printf("Chunk Size: %d\n",curr->BlockSz);
 
     //Condition checks if given chunk has sufficient size and is free
     if((curr->free == 1) && (size <= curr->BlockSz)){
@@ -77,8 +77,8 @@ void *mymalloc(size_t size, char *file, int line)
       //Size of required allocated memory plus metadata header is smaller than the size of the current memory chunk
       else if((size + sizeof(struct node)) < curr->BlockSz){
         //Divide the current chunk into two parts for memory allocation
-        printf("Diving chunk into two parts:\n");
-        printf("Whole Chunk: %d\n",curr->BlockSz);
+        //printf("Diving chunk into two parts:\n");
+        //printf("Whole Chunk: %d\n",curr->BlockSz);
 
         //Creates new node to represent right part of the divided chunk, the free section
         struct node *temp = (void *)curr + size + sizeof(struct node);
@@ -93,9 +93,9 @@ void *mymalloc(size_t size, char *file, int line)
         curr->free = 0;
         curr->next = temp;
         
-        printf("Left Side: %d\n",curr->BlockSz);
-        printf("Right Side: %d\n",temp->BlockSz);
-        printf("Head: %d\n",head->BlockSz);
+        //printf("Left Side: %d\n",curr->BlockSz);
+        //printf("Right Side: %d\n",temp->BlockSz);
+        //printf("Head: %d\n",head->BlockSz);
         address = curr->start_address;
         return address;
       }
@@ -109,10 +109,6 @@ void *mymalloc(size_t size, char *file, int line)
   //Error for not enough memory in the virtual heap
   fprintf(stderr, "%s: line: %d: error: not enough memory in the heap.\n", file, line);
   return NULL;
-
-  //while((curr >= head) && ((char *) curr <= &memBlock[memSize-1])){
-    
-  //}
 
 }
 
@@ -151,10 +147,8 @@ void myfree(void *ptr, char *file, int line)
       }
       //FIXME: may need to fix this part, further testing required
       if(curr->next != NULL && curr->next->free == 1){
-        printf("asdf\n");
         curr->BlockSz = curr->BlockSz + curr->next->BlockSz; 
         if(curr->next->next != NULL){
-          printf("asdf2\n");
           curr->next->next->prev = curr;
         }
         curr->next = curr->next->next;
@@ -181,20 +175,23 @@ void printList(){
   }
 }
 
-//For Testing purposes
+/*
 int main(int argc, char* argv[]){
     void *test = malloc(100);
     void *test2 = malloc(200);
-    //void *test3 = malloc(300);
-    //void *test4 = malloc(400);
+    void *test3 = malloc(300);
+    void *test4 = malloc(400);
     printf("Address: %p\n", test);
     printf("Address: %p\n", test2);
     //printf("Address: %p\n", test3);
     //printf("Address: %p\n", test4);
     printList();
-    //free(test);
+    free(test);
+    free(test3);
     free(test2);
+    //free(test4);
     printf("--------------------\n");
     printList();
     return 0;
 }
+*/
