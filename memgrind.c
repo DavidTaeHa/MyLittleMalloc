@@ -81,15 +81,66 @@ double grindThree(){
     return totalTime;
 }
 
+double grindFour(){
+    struct timeval tval1, tval2;
+    int *arr[1000];
+    int count = 0;
+    int size = 0;
+    int random = 0;
+  
+    gettimeofday(&tval1, NULL);
+    while(count < 120){
+        arr[size] = malloc(1);
+        random = rand() % 2;
+        if(random == 1){
+            free(arr[size]);
+            arr[size] = NULL;
+        }
+        else{
+            size++;
+        }
+        count++;
+    }
+    for(int i = 0; i<size; i++){
+        free(arr[i]);
+        arr[i] = NULL;
+    }
+    gettimeofday(&tval2, NULL);
+  
+    double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
+    return totalTime;
+}
 
+double grindFive(){
+    int i, j;
+    struct timeval tval1, tval2;
+    int **arr[100][100];
+  
+    gettimeofday(&tval1, NULL);
+    for(i = 0; i < 10; i++){
+        for(j = 0; j < 12; j++){
+            arr[i][j] = malloc(1);
+        }  
+    }
+    for(i = 0; i < 10; i++){
+        for(j = 0; j < 12; j++){
+            free(arr[i][j]);
+            arr[i][j] = NULL;
+        }
+    }
+    gettimeofday(&tval2, NULL);
+  
+    double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
+    return totalTime;
+}
 
 int main(){
     int i;
     double first = 0;
     double second = 0;
     double third = 0;
-    //double fourth = 0;
-    //double fifth = 0;
+    double fourth = 0;
+    double fifth = 0;
   
     for(i = 0; i < 50; i++){
         first += grindOne();
@@ -99,16 +150,52 @@ int main(){
         //second += grindTwo();
     }
     for(i = 0; i < 50; i++){
-        //third += grindThree();
+        third += grindThree();
     }
+    for(i = 0; i < 50; i++){
+        fourth += grindFour();
+    }
+    for(i = 0; i < 50; i++){
+        fifth += grindFive();
+    }
+<<<<<<< HEAD
 
     printf("Total of Immediate: %f seconds\n", first);
     printf("Total of Delayed: %f seconds\n", second);
     printf("Total of Random: %f seconds\n", third);
+=======
+    printf("Seconds:\n");
+    printf("\tTotal of Immediate: %f seconds\n", first);
+    printf("\tAverage of Immediate: %f seconds\n", first/50);
     printf("\n");
-    printf("Average of Immediate: %f seconds\n", first/50);
-    printf("Average of Delayed: %f seconds\n", second/50);
-    printf("Average of Random: %f seconds\n", third/50);
-
+    printf("\tTotal of Delayed: %f seconds\n", second);
+    printf("\tAverage of Delayed: %f seconds\n", second/50);
+    printf("\n");
+    printf("\tTotal of Random: %f seconds\n", third);
+    printf("\tAverage of Random: %f seconds\n", third/50);
+    printf("\n");
+    printf("\tTotal of Combination: %f seconds\n", fourth);
+    printf("\tAverage of Combination: %f seconds\n", fourth/50);
+    printf("\n");
+    printf("\tTotal of Double Array: %f seconds\n", fifth);
+    printf("\tAverage of Double Array: %f seconds\n", fifth/50);
+    printf("\n");
+    printf("Milliseconds:\n");
+    printf("\tTotal of Immediate: %f milliseconds\n", first*1000000);
+    printf("\tAverage of Immediate: %f milliseconds\n", first*20000);
+    printf("\n");
+    printf("\tTotal of Delayed: %f milliseconds\n", second*1000000);
+    printf("\tAverage of Delayed: %f milliseconds\n", second*20000);
+    printf("\n");
+    printf("\tTotal of Random: %f milliseconds\n", third*1000000);
+    printf("\tAverage of Random: %f milliseconds\n", third*20000);
+    printf("\n");
+    printf("\tTotal of Combination: %f milliseconds\n", fourth*1000000);
+    printf("\tAverage of Combination: %f milliseconds\n", fourth*20000);
+    printf("\n");
+    printf("\tTotal of Double Array: %f milliseconds\n", fifth*1000000);
+    printf("\tAverage of Double Array: %f milliseconds\n", fifth*20000);
+>>>>>>> 3c0f2c75f8b640d62f0c8c1295f898344daa1edd
+    printf("\n");
     return 0;
 }
