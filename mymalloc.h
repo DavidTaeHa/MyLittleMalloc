@@ -14,8 +14,6 @@ struct node{
 };
 //For free, 1 is true, 0 is false
 
-struct node *prevPtr(struct node *);
-struct node *nextPtr(struct node *);
 void *mymalloc(size_t size, char *file, int line);
 void myfree(void *ptr, char *file, int line);
 
