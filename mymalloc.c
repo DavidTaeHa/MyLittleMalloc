@@ -3,11 +3,21 @@
 #include <sys/time.h>
 #include "mymalloc.h"
 
+/*
 #define memSize 4096
 static char memBlock[memSize];
+*/
 
 //Main area of memory started out as one whole block
 struct node *head = (struct node *) memBlock;
+
+void initialize(){
+  head->start_address = (void *) head + sizeof(struct node);
+  head->BlockSz = memSize - sizeof(struct node);
+  head->free = 1;
+  head->next = NULL;
+  head->prev = NULL;
+}
 
 void *mymalloc(size_t size, char *file, int line)
 {

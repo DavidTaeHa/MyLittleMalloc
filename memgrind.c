@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <sys/time.h>
 #include "mymalloc.h"
@@ -10,11 +11,12 @@ double grindOne(){
     struct timeval tval1, tval2;
     void *arr[20000];
     gettimeofday(&tval1, NULL);
-    for(i = 0; i < 2; i++){
-        printList();
+    for(i = 0; i < 120; i++){
+        //printList();
         arr[i] = (void *) malloc(1);
         free(arr[i]);
     }
+    initialize();
     gettimeofday(&tval2, NULL);
   
     double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
@@ -35,6 +37,7 @@ double grindTwo(){
         free(arr[i]);
         arr[i] = NULL;
     }
+    initialize();
     gettimeofday(&tval2, NULL);
   
     double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
@@ -75,6 +78,7 @@ double grindThree(){
         free(arr[size]);
 	    arr[size] = NULL;
     }
+    initialize();
     gettimeofday(&tval2, NULL);
   
     double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
@@ -105,6 +109,7 @@ double grindFour(){
         free(arr[i]);
         arr[i] = NULL;
     }
+    initialize();
     gettimeofday(&tval2, NULL);
   
     double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
@@ -128,6 +133,7 @@ double grindFive(){
             arr[i][j] = NULL;
         }
     }
+    initialize();
     gettimeofday(&tval2, NULL);
   
     double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
@@ -144,19 +150,18 @@ int main(){
   
     for(i = 0; i < 50; i++){
         first += grindOne();
-        printf("-------------------------\n");
     }
     for(i = 0; i < 50; i++){
-        //second += grindTwo();
+        second += grindTwo();
     }
     for(i = 0; i < 50; i++){
-        //third += grindThree();
+        third += grindThree();
     }
     for(i = 0; i < 50; i++){
-        //fourth += grindFour();
+        fourth += grindFour();
     }
     for(i = 0; i < 50; i++){
-        //fifth += grindFive();
+        fifth += grindFive();
     }
 
     printf("Total of Immediate: %f seconds\n", first);
