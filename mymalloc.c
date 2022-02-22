@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "mymalloc.h"
 
 #define memSize 4096
@@ -63,7 +64,7 @@ void *mymalloc(size_t size, char *file, int line)
         //Creates new node to represent right part of the divided chunk, the free section
         struct node *temp = (void *)curr + size + sizeof(struct node);
         temp->start_address = (void *)curr + size + sizeof(struct node);
-        temp->BlockSz = curr->BlockSz - size;
+        temp->BlockSz = curr->BlockSz - size - sizeof(struct node); //check sizeof(struct node)
         temp->free = 1;
         temp->next = curr->next;
         temp->prev = curr;
@@ -157,21 +158,20 @@ void printList(){
 
 /*
 int main(int argc, char* argv[]){
-    void *test = malloc(100);
-    void *test2 = malloc(200);
-    void *test3 = malloc(300);
-    void *test4 = malloc(400);
-    printf("Address: %p\n", test);
-    printf("Address: %p\n", test2);
-    //printf("Address: %p\n", test3);
-    //printf("Address: %p\n", test4);
+    int i;
+    struct timeval tval1, tval2;
+    void *arr[20000];
+    gettimeofday(&tval1, NULL);
+    for(i = 0; i < 120; i++){
+      printList();
+      arr[i] = (int *) malloc(1);
+      free(arr[i]);
+      arr[i] = NULL;
+    }
+    gettimeofday(&tval2, NULL);
+  
+    double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
     printList();
-    free(test);
-    free(test3);
-    free(test2);
-    //free(test4);
-    printf("--------------------\n");
-    printList();
-    return 0;
+    return totalTime;
 }
 */

@@ -8,13 +8,12 @@
 double grindOne(){
     int i;
     struct timeval tval1, tval2;
-    int *arr[200];
-  
+    void *arr[20000];
     gettimeofday(&tval1, NULL);
-    for(i = 0; i < 120; i++){
-        arr[i] = (int *) malloc(1);
+    for(i = 0; i < 2; i++){
+        printList();
+        arr[i] = (void *) malloc(1);
         free(arr[i]);
-        arr[i] = NULL;
     }
     gettimeofday(&tval2, NULL);
   
@@ -26,7 +25,7 @@ double grindOne(){
 double grindTwo(){
     int i;
     struct timeval tval1, tval2;
-    int *arr[200];
+    int *arr[20000];
   
     gettimeofday(&tval1, NULL);
     for(i = 0; i < 120; i++){
@@ -94,14 +93,15 @@ int main(){
   
     for(i = 0; i < 50; i++){
         first += grindOne();
+        printf("-------------------------\n");
     }
     for(i = 0; i < 50; i++){
-        second += grindTwo();
+        //second += grindTwo();
     }
     for(i = 0; i < 50; i++){
         //third += grindThree();
     }
-    
+
     printf("Total of Immediate: %f seconds\n", first);
     printf("Total of Delayed: %f seconds\n", second);
     printf("Total of Random: %f seconds\n", third);
