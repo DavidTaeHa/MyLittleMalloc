@@ -8,20 +8,6 @@ static char memBlock[memSize];
 //Main area of memory started out as one whole block
 struct node *head = (struct node *) memBlock;
 
-struct node *prevPtr(struct node *curr)
-{
-  char *retr = (char *) curr;
-  retr = retr - curr->preBlockSz - sizeof(struct node);
-  return (struct node *) retr;
-}
-
-struct node *nextPtr(struct node *curr)
-{
-  char *retr = (char *) curr;
-  retr = retr + sizeof(struct node) + curr->BlockSz;
-  return (struct node *) retr;
-}
-
 void *mymalloc(size_t size, char *file, int line)
 {
 
