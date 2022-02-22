@@ -58,7 +58,7 @@ double grindThree(){
             size++;
         }
         else{
-            free(arr[size-1]);
+            free(arr[size]);
             size--;
         }
     }
