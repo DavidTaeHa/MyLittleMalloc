@@ -83,14 +83,13 @@ int main(){
   double third = 0;
   //double fourth = 0;
   //double fifth = 0;
-  
-  /*Malloc and Free 1-byte chunk, 120 times*/
+
   for(i=0; i<50; i++){
     first += grindOne();
     second += grindTwo();
     third += grindThree();
   }
   printf("Average of Immediate: %f seconds\n", first/50);
-	printf("Average of Delayed: %f seconds\n", second/50);
-	printf("Average of Random: %f seconds\n", third/50);
+  printf("Average of Delayed: %f seconds\n", second/50);
+  printf("Average of Random: %f seconds\n", third/50);
 }
