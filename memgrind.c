@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <math.h>
 #include <sys/time.h>
 #include "mymalloc.h"
@@ -9,10 +8,11 @@
 double grindOne(){
     int i;
     struct timeval tval1, tval2;
-    void *arr[20000];
+    int *arr[200];
+  
     gettimeofday(&tval1, NULL);
     for(i = 0; i < 120; i++){
-        arr[i] = (void *) malloc(1);
+        arr[i] = (int *) malloc(1);
         free(arr[i]);
         arr[i] = NULL;
     }
@@ -26,7 +26,7 @@ double grindOne(){
 double grindTwo(){
     int i;
     struct timeval tval1, tval2;
-    int *arr[20000];
+    int *arr[200];
   
     gettimeofday(&tval1, NULL);
     for(i = 0; i < 120; i++){
@@ -48,33 +48,24 @@ double grindThree(){
     int *arr[1000];
     int count = 0;
     int size = 0;
-    int fcount = 0;
     int random = 0;
   
     gettimeofday(&tval1, NULL);
     while(count < 120){
         random = rand() % 2;
-        if(random == 0 && count < 120){
+        if((size == 0 || random == 0) && count < 120){
             arr[size] = (int *) malloc(1);
             count++;
             size++;
         }
         else{
-            if(arr[fcount] == NULL){
-                arr[size] = (int *) malloc(1);
-                size++;
-                count++;
-            }
-            else{
-                free(arr[fcount]);
-                arr[fcount] = NULL;
-                fcount++;
-            }
+            size--;
+            free(arr[size]);
         }
     }
-    for(size = fcount; size < 120; size++){
-        free(arr[size]);
-	    arr[size] = NULL;
+    for(; size > 0; size--){
+        free(arr[size-1]);
+	    arr[size-1] = NULL;
     }
     gettimeofday(&tval2, NULL);
   
@@ -102,9 +93,9 @@ double grindFour(){
         }
         count++;
     }
-    for(int i = 0; i<size; i++){
-        free(arr[i]);
-        arr[i] = NULL;
+    for(; size > 0; size--){
+        free(arr[size-1]);
+        arr[size-1] = NULL;
     }
     gettimeofday(&tval2, NULL);
   
@@ -123,10 +114,10 @@ double grindFive(){
             arr[i][j] = malloc(1);
         }  
     }
-    for(i = 0; i < 10; i++){
-        for(j = 0; j < 12; j++){
-            free(arr[i][j]);
-            arr[i][j] = NULL;
+    for(i = 10; i > 0; i--){
+        for(j = 12; j > 0; j--){
+            free(arr[i-1][j-1]);
+            arr[i-1][j-1] = NULL;
         }
     }
     gettimeofday(&tval2, NULL);
@@ -158,10 +149,6 @@ int main(){
     for(i = 0; i < 50; i++){
         fifth += grindFive();
     }
-
-    printf("Total of Immediate: %f seconds\n", first);
-    printf("Total of Delayed: %f seconds\n", second);
-    printf("Total of Random: %f seconds\n", third);
     printf("Seconds:\n");
     printf("\tTotal of Immediate: %f seconds\n", first);
     printf("\tAverage of Immediate: %f seconds\n", first/50);
