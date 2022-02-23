@@ -129,7 +129,7 @@ void myfree(void *ptr, char *file, int line)
 
       //Handle coalescence of adjacent free blocks, check both left and right block
       if(curr->prev != NULL && curr->prev->free == 1){
-        curr->prev->BlockSz = curr->prev->BlockSz + curr->BlockSz;
+        curr->prev->BlockSz = curr->prev->BlockSz + curr->BlockSz + sizeof(struct node);
         if(curr->next != NULL){
         curr->next->prev = curr->prev;
         }
@@ -138,7 +138,7 @@ void myfree(void *ptr, char *file, int line)
       }
       //FIXME: may need to fix this part, further testing required
       if(curr->next != NULL && curr->next->free == 1){
-        curr->BlockSz = curr->BlockSz + curr->next->BlockSz; 
+        curr->BlockSz = curr->BlockSz + curr->next->BlockSz + sizeof(struct node); 
         if(curr->next->next != NULL){
           curr->next->next->prev = curr;
         }
@@ -167,21 +167,23 @@ void printList(){
 }
 
 /*
-int main(int argc, char* argv[]){
-    int i;
-    struct timeval tval1, tval2;
-    void *arr[20000];
-    gettimeofday(&tval1, NULL);
-    for(i = 0; i < 120; i++){
-      printList();
-      arr[i] = (int *) malloc(1);
-      free(arr[i]);
-      arr[i] = NULL;
-    }
-    gettimeofday(&tval2, NULL);
-  
-    double totalTime = (double)(tval2.tv_sec - tval1.tv_sec) + (double)(tval2.tv_usec - tval1.tv_usec)/1000000;
-    printList();
-    return totalTime;
+void main(int argc, char* argv[]){
+  printList();
+  printf("----------------------------\n");
+  void *test = malloc(100);
+  printList();
+  printf("----------------------------\n");
+  void *test2 = malloc(200);
+  void *test3 = malloc(300);
+  void *test4 = malloc(400);
+  printList();
+  printf("----------------------------\n");
+  free(test2);
+  free(test);
+  printList();
+  printf("----------------------------\n");
+  void *test5 = malloc(150);
+  //void *test6 = malloc(80);
+  printList();
 }
 */
