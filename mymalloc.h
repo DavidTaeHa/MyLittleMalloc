@@ -5,7 +5,6 @@
 #define malloc(s) mymalloc(s, __FILE__, __LINE__);
 #define free(p) myfree(p, __FILE__, __LINE__);
 #define memSize 4096
-static char memBlock[memSize];
 
 //Size is 32 bytes
 struct node{
