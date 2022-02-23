@@ -3,10 +3,8 @@
 #include <sys/time.h>
 #include "mymalloc.h"
 
-/*
-#define memSize 4096
 static char memBlock[memSize];
-*/
+
 
 //Main area of memory started out as one whole block
 struct node *head = (struct node *) memBlock;
