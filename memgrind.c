@@ -14,6 +14,7 @@ double grindOne(){
     for(i = 0; i < 120; i++){
         arr[i] = (void *) malloc(1);
         free(arr[i]);
+        arr[i] = NULL;
     }
     gettimeofday(&tval2, NULL);
   
@@ -149,13 +150,13 @@ int main(){
         second += grindTwo();
     }
     for(i = 0; i < 50; i++){
-        //third += grindThree();
+        third += grindThree();
     }
     for(i = 0; i < 50; i++){
-        //fourth += grindFour();
+        fourth += grindFour();
     }
     for(i = 0; i < 50; i++){
-        //fifth += grindFive();
+        fifth += grindFive();
     }
 
     printf("Total of Immediate: %f seconds\n", first);
